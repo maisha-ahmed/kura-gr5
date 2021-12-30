@@ -58,7 +58,7 @@ Follow the link for the setup.
 *The URLs must be ‘https’, with exception of urls with localhost where ‘http’ is allowed. Here is the [source](https://medium.com/swlh/authentication-authorization-for-web-apps-using-aws-cognito-21548bb3b86)*.
 
 
-## Sources Visited:
+## Sources visited:
 
 1. https://docs.nginx.com/nginx/deployment-guides/single-sign-on/cognito/#cognito-domain-name
 2. https://cran.r-project.org/web/packages/cognitoR/readme/README.html
