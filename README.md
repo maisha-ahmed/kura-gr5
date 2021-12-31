@@ -57,7 +57,7 @@ Follow the link for the setup.
 
 *The URLs must be ‘https’, with exception of urls with localhost where ‘http’ is allowed. Here is the [source](https://medium.com/swlh/authentication-authorization-for-web-apps-using-aws-cognito-21548bb3b86)*.
 
-
+### Part 3 - Circle CI Set up
 ## Sources visited:
 
 1. https://docs.nginx.com/nginx/deployment-guides/single-sign-on/cognito/#cognito-domain-name
