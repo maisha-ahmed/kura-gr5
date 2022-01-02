@@ -65,7 +65,7 @@ For mor information visit the [Amazon Cognito - Developer Guide](https://docs.aw
 
 After adding **AWS Cognito** for authentication, we did not have a way to log out of the application once we have loged in. <br>
 For this, we added a **logout** button. We used an icon from [zmdi](https://www.templateshub.net/demo/Mentor-Bootstrap4-Admin-Dashboard-Template/icons-material.html). <br>
-Here is the added code in the [index.html](https://github.com/ibrahima1289/KURA_GROUP_5/blob/main/frontend/index.html) file.
+Below is the added code for the logout button in **blue x** in the [index.html](https://github.com/ibrahima1289/KURA_GROUP_5/blob/main/frontend/index.html) file line 37, [order.html](https://github.com/ibrahima1289/KURA_GROUP_5/blob/main/frontend/order.html) file line 35, and the [manage-product.html](https://github.com/ibrahima1289/KURA_GROUP_5/blob/main/frontend/manage-product.html) file line 36.
 
 ```
 <a href="logout.html">
