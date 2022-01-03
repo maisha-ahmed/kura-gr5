@@ -1,12 +1,12 @@
 version: 2.1
-orbs:
-  docker: circleci/docker@1.7.0
+
 jobs:
-  build:
+  build_and_test_backend:
     docker:
-      - image: python:3.10      
+      - image: circleci/python:3.7.4
     steps:
       - checkout
+<<<<<<< HEAD
       - run: |
           pwd
           ls
@@ -26,6 +26,12 @@ jobs:
       - run:
           name: Install Python dependencies
           command: |
+=======
+      - run:
+          name: Install Python dependencies
+          command: |
+            cd backend/
+>>>>>>> 8375a39f91fd30f1b933b174dcbaf46670769420
             echo 'export PATH=~$PATH:~/.local/bin' >> $BASH_ENV && source $BASH_ENV
             pip install --user -r requirements.txt
       - run:
@@ -35,9 +41,31 @@ jobs:
       - store_test_results:
           path: test-reports
       - store_artifacts:
+<<<<<<< HEAD
           path: test-reports            
 workflows: 
   Build:
       jobs:
         - build
         - run_tests
+=======
+          path: test-reports
+    
+  build_and_test_frontend:
+      docker:
+        - image: nginx
+      steps:
+        - checkout
+        - run:
+            name: copying file
+            command: |
+              cd frontend/
+              cp -r ~/project/frontend/. /usr/share/nginx/html
+
+workflows:
+  build_test:
+    jobs:
+      - build_and_test_frontend
+      - build_and_test_backend
+
+>>>>>>> 8375a39f91fd30f1b933b174dcbaf46670769420
