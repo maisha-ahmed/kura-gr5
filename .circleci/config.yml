@@ -25,11 +25,9 @@ jobs:
       - store_test_results:
           path: test-reports
       - store_artifacts:
-          path: test-reports
-
-             
+          path: test-reports             
 workflows: 
   Build:
       jobs:
         - build
-        - run_tests
+        - test
