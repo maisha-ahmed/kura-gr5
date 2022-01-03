@@ -61,7 +61,10 @@ For mor information visit the [Amazon Cognito - Developer Guide](https://docs.aw
 
 ### Part 3 - Circle CI Set up
 
+<<<<<<< HEAD
 Used resource from [punkdata](https://github.com/punkdata/python-flask/blob/master/.circleci/config.yml).
+=======
+>>>>>>> 16534b6181f5e8ff561045e567f6538497ebd6af
 
 ### Part 4 - The Front-End Modifications
 
