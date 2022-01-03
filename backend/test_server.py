@@ -1,10 +1,10 @@
-import server
+import server_app
 import unittest
 
 class TestServer(unittest.TestCase):
     
     def setup(self):
-        self.app = server.app.get.test_client()
+        self.app = server_app.app.get.test_client()
         self.app.testing = True
     
     def test_status_code(self):
