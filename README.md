@@ -61,6 +61,8 @@ For mor information visit the [Amazon Cognito - Developer Guide](https://docs.aw
 
 ### Part 3 - Circle CI Set up
 
+Used resource from [punkdata](https://github.com/punkdata/python-flask/blob/master/.circleci/config.yml).
+
 ### Part 4 - The Front-End Modifications
 
 After adding **AWS Cognito** for authentication, we did not have a way to log out of the application once we have loged in. <br>
