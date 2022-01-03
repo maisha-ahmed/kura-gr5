@@ -17,8 +17,19 @@ jobs:
           pip install --no-cache-dir -r requirements.txt
           FLASK_APP=server.py
           python3 server.py &
+  test:
+      - run:
+          name: Run unit Tests
+          command: |
+            pytest --junixml=test-report/junit.xml --html=test-reports/pytest_report.html --self-contained-html
+      -store_test_results
+          path: test-reports
+      -store_artifacts
+          path: test-reports
+
              
 workflows: 
   Build:
       jobs:
         - build
+        - run_tests
