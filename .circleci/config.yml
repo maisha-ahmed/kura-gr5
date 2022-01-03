@@ -22,9 +22,9 @@ jobs:
           name: Run unit Tests
           command: |
             pytest --junixml=test-report/junit.xml --html=test-reports/pytest_report.html --self-contained-html
-      -store_test_results
+      - store_test_results
           path: test-reports
-      -store_artifacts
+      - store_artifacts
           path: test-reports
 
              
