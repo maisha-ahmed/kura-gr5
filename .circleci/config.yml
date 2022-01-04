@@ -34,10 +34,37 @@ jobs:
             command: |
               cd frontend/
               cp -r ~/project/frontend/. /usr/share/nginx/html
+  
+  build_and_push:
+    docker:
+      - image: circleci/python:3.7.4
+    steps:
+      - checkout
+      - run:
+          name: Setup common environment variables
+          command: |
+            echo 'export ECR_REPOSITORY_NAME="${AWS_RESOURCE_NAME_PREFIX}"' >> $BASH_ENV
+            echo 'export FULL_IMAGE_NAME="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:latest"' >> $BASH_ENV
+      
+      - run:
+          name: Build image
+          command: |
+            docker build -t $FULL_IMAGE_NAME .
+      - run:
+          name: Push image
+          command: |
+            eval $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
+            docker push $FULL_IMAGE_NAME
 
 workflows:
   build_test:
     jobs:
       - build_and_test_frontend
       - build_and_test_backend
+  build-deploy:
+    jobs:
+      - build_and_push:
+          filters:
+            branches:
+              only: main
   
