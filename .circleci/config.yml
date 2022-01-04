@@ -1,5 +1,4 @@
 version: 2.1
-
 orbs:
   aws-ecr: circleci/aws-ecr@0.0.4
 
@@ -20,7 +19,7 @@ workflows:
 jobs:
   build_test:
     docker:
-      - image: circleci/python:2.7.14
+      - image: circleci/python:3.7.4
     steps:
       - checkout
       - run:
