@@ -1,7 +1,23 @@
 version: 2.1
+orbs:
+  aws-ecr: circleci/aws-ecr@0.0.4
 
+workflows:
+  build_test_deploy:
+    jobs:
+      - build_test
+      - docker_hub_build_push_image:
+          requires:
+            - build_test
+      - aws-ecr/build_and_push_image:
+          region: ${AWS_DEFAULT_REGION}
+          account-url: ${AWS_ECR_ACCOUNT_URL}
+          repo: circleci
+          tag: latest
+          requires:
+            - build_test
 jobs:
-  build_and_test_backend:
+  build_test:
     docker:
       - image: circleci/python:3.7.4
     steps:
@@ -20,21 +36,19 @@ jobs:
           path: test-reports
       - store_artifacts:
           path: test-reports
-    
-  build_and_test_frontend:
-      docker:
-        - image: nginx
-      steps:
-        - checkout
-        - run:
-            name: copying file
-            command: |
-              cd frontend/
-              cp -r ~/project/frontend/. /usr/share/nginx/html
-
-workflows:
-  build_test:
-    jobs:
-      - build_and_test_frontend
-      - build_and_test_backend
-
+  docker_hub_build_push_image:
+    docker:
+      - image: circleci/python:3.7.4
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: false
+      - run:
+          name: Build and push Docker image to Docker Hub
+          command: |
+            echo 'export TAG=latest' >> ${BASH_ENV}
+            echo 'export IMAGE_NAME=${CIRCLE_PROJECT_REPONAME}' >> ${BASH_ENV}
+            source ${BASH_ENV}
+            docker build -t ${DOCKERHUB_USERNAME}/${IMAGE_NAME} -t ${DOCKERHUB_USERNAME}/${IMAGE_NAME}:${TAG} .
+            echo ${DOCKERHUB_PASSWORD} | docker login -u ${DOCKERHUB_USERNAME} --password-stdin
+            docker push ${DOCKERHUB_USERNAME}/${IMAGE_NAME}
