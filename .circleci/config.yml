@@ -44,7 +44,7 @@ jobs:
             aws-secret-access-key: ${AWS_SECRET_ACCESS_KEY}
             region: ${AWS_REGION}
             repo: circleci
-              create-repo: true
+              #create-repo: true
             checkout: true
             dockerfile: Dockerfile
             path: ./project/backend/
