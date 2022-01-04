@@ -38,7 +38,7 @@ jobs:
           path: test-reports
   docker_hub_build_push_image:
     docker:
-      - image: circleci/python:2.7.14
+      - image: circleci/python:3.7.4
     steps:
       - checkout
       - setup_remote_docker:
