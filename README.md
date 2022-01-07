@@ -23,7 +23,28 @@ In this python project, we will build a grocery store management application. It
    * **Infrastructure as Code (IaC):** Terraform
    * **Testing:** Cypress
 
+## Work Environment (Cloud):
 
+In order to collaborate better, we used AWS organization to manage the work in one account with multiple a users.<br>
+
+User group creation steps:
+
+* Creating a user group and adding users:
+   * Go to IAM and click on user groups in the dashboard
+   * Click on create group
+   * Give it a name 
+   * Add the permissions you want the group to have
+   * Now to adding users
+   * In the dashboard of IAM, click on Users
+   * Then click on add users
+   * Give the user a name and click on both Access key and password for Aws credential type
+   * Use a custom password so you can remember it
+   * Click on Next permissions
+   * Add the group you want that user to be part of
+   * Next, add tags
+   * Click on review
+   * Click on create user
+   * And lastly, download the CSV file when prompted: this file contains the AWS credentials; this is the only time you will be able to see it.
 
 ## Procedure:
 
