@@ -13,7 +13,7 @@ workflows:
           region: ${AWS_DEFAULT_REGION}
           account-url: ${AWS_ECR_ACCOUNT_URL}
           repo: circleci
-          tag: ${CIRCLE_BUILD_NUM}
+          tag: image:${CIRCLE_BUILD_NUM}
           requires:
             - build_test
 jobs:
