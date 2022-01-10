@@ -13,7 +13,7 @@ workflows:
           region: ${AWS_DEFAULT_REGION}
           account-url: ${AWS_ECR_ACCOUNT_URL}
           repo: circleci
-          tag: image:${CIRCLE_BUILD_NUM}
+          tag: image-${CIRCLE_BUILD_NUM}
           requires:
             - build_test
 jobs:
@@ -46,7 +46,7 @@ jobs:
       - run:
           name: Build and push Docker image to Docker Hub
           command: |
-            echo 'export TAG=0.1.${CIRCLE_BUILD_NUM}' >> ${BASH_ENV}
+            echo 'export TAG=image-${CIRCLE_BUILD_NUM}' >> ${BASH_ENV}
             echo 'export IMAGE_NAME=${CIRCLE_PROJECT_REPONAME}' >> ${BASH_ENV}
             source ${BASH_ENV}
             docker build -t ${DOCKERHUB_USERNAME}/${IMAGE_NAME} -t ${DOCKERHUB_USERNAME}/${IMAGE_NAME}:${TAG} .
