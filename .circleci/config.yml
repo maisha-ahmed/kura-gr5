@@ -16,7 +16,12 @@ workflows:
           repo: circleci
           tag: image-${CIRCLE_BUILD_NUM}
           requires:
-            - build_test
+            - build_test   
+  notify:
+    jobs:
+          context:
+            - ei-circleci-alerts
+
 
 
                     
