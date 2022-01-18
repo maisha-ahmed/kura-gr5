@@ -17,7 +17,9 @@ workflows:
           tag: image-${CIRCLE_BUILD_NUM}
           requires:
             - build_test
-          context:ei-circleci-alerts
+      - notify:
+          context: ei-circleci-alerts
+
 
 
                     
