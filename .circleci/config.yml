@@ -71,7 +71,7 @@ jobs:
             docker push ${DOCKERHUB_USERNAME}/${IMAGE_NAME}
      
      
- notify:
+  notify:
     docker:
       - image: 'cimg/base:stable'
     steps:
