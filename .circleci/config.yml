@@ -16,6 +16,7 @@ workflows:
           tag: latest
           requires:
             - build_test
+
 jobs:
   build_test:
     docker:
@@ -52,3 +53,25 @@ jobs:
             docker build -t ${DOCKERHUB_USERNAME}/${IMAGE_NAME} -t ${DOCKERHUB_USERNAME}/${IMAGE_NAME}:${TAG} .
             echo ${DOCKERHUB_PASSWORD} | docker login -u ${DOCKERHUB_USERNAME} --password-stdin
             docker push ${DOCKERHUB_USERNAME}/${IMAGE_NAME}
+      - slack/notify:
+          channel: ei-circleci-alerts
+          event: fail
+          template: basic_fail_1
+workflows:
+  deploy_and_notify:
+    jobs:
+      - deploy:
+          context: ei-circleci-alerts
+          
+      - slack/notify:
+          channel: ei-circleci-alerts
+          event: pass
+          template: basic_fail_1
+workflows:
+  deploy_and_notify:
+    jobs:
+      - deploy:
+          context:
+            - #ei-circle-ci-alerts
+
+
