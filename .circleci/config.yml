@@ -62,6 +62,11 @@ jobs:
           channel: ei-circleci-alerts
           event: fail
           template: basic_fail_1
+      - slack/notify:
+          channel: ei-circleci-alerts
+          event: fail
+          template: basic_fail_1
+
 
 
 
