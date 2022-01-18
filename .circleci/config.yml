@@ -17,10 +17,7 @@ workflows:
           tag: image-${CIRCLE_BUILD_NUM}
           requires:
             - build_test
-  notify:
-    jobs:
-      - deploy:
-          context:
+
   send-notification:
     jobs:
       - notify:
