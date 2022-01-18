@@ -20,7 +20,7 @@ workflows:
   send-notification:
     jobs:
       - notify:
-          context: SLACK_DEFAULT_CHANNEL
+          context: ei-circleci-alerts
           
                 
       
