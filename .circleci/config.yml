@@ -1,12 +1,13 @@
-version: '2.1'
+version: 2.1
 orbs:
   aws-ecr: circleci/aws-ecr@0.0.4
-  slack: circleci/slack@4.1
+  slack: circleci/slack@4.6.0
 
 workflows:
   build_test_deploy:
     jobs:
-      - build_test
+      - build_test:
+           context: ei-circleci-alerts
       - docker_hub_build_push_image:
           requires:
             - build_test
@@ -17,10 +18,7 @@ workflows:
           tag: image-${CIRCLE_BUILD_NUM}
           requires:
             - build_test
-  send-notification:
-    jobs:
-      - notify:
-          context: ei-circleci-alerts
+  
           
                 
       
@@ -40,6 +38,32 @@ jobs:
           name: Run unit tests
           command: |
             pytest --junitxml=test-reports/junit.xml --html=test-reports/pytest_report.html --self-contained-html
+      - slack/notify:
+          channel: $SLACK_DEFAULT_CHANNEL
+          event: fail
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy_1
+          
+#       - slack/notify:
+#           channel: SLACK_DEFAULT_CHANNEL
+#           custom: |
+#             {
+#               "blocks": [
+#                 {
+#                   "type": "section",
+#                   "fields": [
+#                     {
+#                       "type": "plain_text",
+#                       "text": "*Test passed notification*",
+#                       "emoji": true
+#                     }
+#                   ]
+#                 }
+#               ]
+#           event: pass  
+                 
       - store_test_results:
           path: test-reports
       - store_artifacts:
@@ -60,28 +84,17 @@ jobs:
             docker build -t ${DOCKERHUB_USERNAME}/${IMAGE_NAME} -t ${DOCKERHUB_USERNAME}/${IMAGE_NAME}:${TAG} .
             echo ${DOCKERHUB_PASSWORD} | docker login -u ${DOCKERHUB_USERNAME} --password-stdin
             docker push ${DOCKERHUB_USERNAME}/${IMAGE_NAME}
+  
 
-  notify:
-    docker:
-      - image: 'cimg/base:stable'
-    steps:
-      - slack/notify:
-          custom: |
-            {
-              "blocks": [
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "plain_text",
-                      "text": "Pipeline build is a success!",
-                      "emoji": true
-                    }
-                  ]
-                }
-              ]
-            }
-          event: always
+
+
+
+
+
+
+
+          
+
 
 
            
