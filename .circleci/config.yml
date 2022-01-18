@@ -60,10 +60,6 @@ jobs:
             docker push ${DOCKERHUB_USERNAME}/${IMAGE_NAME}
       - slack/notify:
           channel: ei-circleci-alerts
-          event: fail
-          template: basic_fail_1
-      - slack/notify:
-          channel: ei-circleci-alerts
           event: pass
           template: basic_fail_1
 
