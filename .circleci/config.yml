@@ -18,13 +18,8 @@ workflows:
           requires:
             - build_test
 
-  send-notification:
-    jobs:
-      - notify:
-          context: ei-circleci-alerts
-          
-                
-      
+
+                    
 jobs:
   build_test:
     docker:
@@ -65,44 +60,9 @@ jobs:
           channel: ei-circleci-alerts
           event: fail
           template: basic_fail_1
-          custom: |
-            {
-              "blocks": [
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "plain_text",
-                      "text": "*deploy passed",
-                      "emoji": true
-                    }
-                  ]
-                }
-              ]
-            }
-          event: always
 
-  notify:
-    docker:
-      - image: 'cimg/base:stable'
-    steps:
-      - slack/notify:
-          custom: |
-            {
-              "blocks": [
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "plain_text",
-                      "text": "*This is a text notification*",
-                      "emoji": true
-                    }
-                  ]
-                }
-              ]
-            }
-          event: always
+
+
           
 
 
