@@ -1,4 +1,4 @@
-version: 2.1
+version: '2.1'
 orbs:
   aws-ecr: circleci/aws-ecr@0.0.4
   slack: circleci/slack@4.1
@@ -17,6 +17,9 @@ workflows:
           tag: image-${CIRCLE_BUILD_NUM}
           requires:
             - build_test
+                - deploy:
+          context:
+            - ei-circleci-alerts
 
 jobs:
   build_test:
@@ -59,15 +62,7 @@ jobs:
           channel: ei-circleci-alerts
           event: fail
           template: basic_fail_1
-      - slack/notify:
-          channel: ei-circleci-alerts
-          event: pass
-          template: basic_fail_1
-workflows:
-  deploy_and_notify:
-    jobs:
-      - deploy:
-          context: ei-circleci-alerts
+
           
 
 
