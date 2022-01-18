@@ -7,6 +7,7 @@ workflows:
   build_test_deploy:
     jobs:
       - build_test
+        context: ei-circleci-alerts
       - docker_hub_build_push_image:
           requires:
             - build_test
@@ -19,10 +20,7 @@ workflows:
           tag: image-${CIRCLE_BUILD_NUM}
           requires:
             - build_test
-  send-notification:
-    jobs:
-      - notify:
-          context: ei-circleci-alerts
+  
           
                 
       
