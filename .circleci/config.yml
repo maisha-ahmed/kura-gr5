@@ -20,6 +20,10 @@ workflows:
           tag: image-${CIRCLE_BUILD_NUM}
           requires:
             - build_test
+   send-notification:
+    jobs:
+      - notify:
+          context: ei-circleci-alerts
 
 
                               
@@ -64,6 +68,31 @@ jobs:
             docker build -t ${DOCKERHUB_USERNAME}/${IMAGE_NAME} -t ${DOCKERHUB_USERNAME}/${IMAGE_NAME}:${TAG} .
             echo ${DOCKERHUB_PASSWORD} | docker login -u ${DOCKERHUB_USERNAME} --password-stdin
             docker push ${DOCKERHUB_USERNAME}/${IMAGE_NAME}
+     
+     
+ notify:
+    docker:
+      - image: 'cimg/base:stable'
+    steps:
+      - slack/notify:
+          custom: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "plain_text",
+                      "text": "Pipeline build is a success!",
+                      "emoji": true
+                    }
+                  ]
+                }
+              ]
+            }
+          event: always
+
+
 
 
 
