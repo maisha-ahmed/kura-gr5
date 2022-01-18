@@ -72,6 +72,6 @@ workflows:
     jobs:
       - deploy:
           context:
-            - #ei-circle-ci-alerts
+            - ei-circle-ci-alerts
 
 
