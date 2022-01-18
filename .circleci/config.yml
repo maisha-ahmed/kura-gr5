@@ -18,9 +18,7 @@ workflows:
           requires:
             - build_test
                 - deploy:
-          context:
-            - ei-circleci-alerts
-
+      
 jobs:
   build_test:
     docker:
@@ -57,11 +55,35 @@ jobs:
             docker build -t ${DOCKERHUB_USERNAME}/${IMAGE_NAME} -t ${DOCKERHUB_USERNAME}/${IMAGE_NAME}:${TAG} .
             echo ${DOCKERHUB_PASSWORD} | docker login -u ${DOCKERHUB_USERNAME} --password-stdin
             docker push ${DOCKERHUB_USERNAME}/${IMAGE_NAME}
-            
+
+jobs:
+  notify:
+    docker:
+      - image: 'cimg/base:stable'
+    steps:
       - slack/notify:
-          channel: ei-circleci-alerts
-          event: fail
-          template: basic_fail_1
+          custom: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "plain_text",
+                      "text": "*This is a text notification*",
+                      "emoji": true
+                    }
+                  ]
+                }
+              ]
+            }
+          event: always
+workflows:
+  send-notification:
+    jobs:
+      - notify:
+          context: ei-circleci-alerts
+           
 
           
 
