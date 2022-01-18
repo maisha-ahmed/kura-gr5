@@ -9,5 +9,6 @@ def get_sql_connection():
 
   if __cnx is None:
     #__cnx = mysql.connector.connect(user='root', password='', database='grocery_store')
-    __cnx = mysql.connector.connect(host='grocery-store.csobnuvwajav.us-east-2.rds.amazonaws.com', user='admin', password='grocery2021', database='grocery_store')
+    __cnx = mysql.connector.connect(host='database-1.ck91hoycczjt.us-east-1.rds.amazonaws.com', user='admin', port=3306, password='Kura123.com', database='grocery_store')
   return __cnx
+
