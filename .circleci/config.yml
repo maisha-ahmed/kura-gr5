@@ -17,13 +17,10 @@ workflows:
           tag: image-${CIRCLE_BUILD_NUM}
           requires:
             - build_test   
-  notify:
+  send-notification:
     jobs:
-          context:
-            - ei-circleci-alerts
-
-
-
+      - notify:
+          context: ei-circleci-alerts
                     
 jobs:
   build_test:
