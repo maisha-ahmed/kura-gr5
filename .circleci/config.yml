@@ -43,22 +43,26 @@ jobs:
           event: fail
           template: basic_fail_1
       - slack/notify:
-          channel: SLACK_DEFAULT_CHANNEL
-          custom: |
-            {
-              "blocks": [
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "plain_text",
-                      "text": "*Test passed notification*",
-                      "emoji": true
-                    }
-                  ]
-                }
-              ]
-          event: pass  
+          event: pass
+          template: success_tagged_deploy_1
+          
+#       - slack/notify:
+#           channel: SLACK_DEFAULT_CHANNEL
+#           custom: |
+#             {
+#               "blocks": [
+#                 {
+#                   "type": "section",
+#                   "fields": [
+#                     {
+#                       "type": "plain_text",
+#                       "text": "*Test passed notification*",
+#                       "emoji": true
+#                     }
+#                   ]
+#                 }
+#               ]
+#           event: pass  
                  
       - store_test_results:
           path: test-reports
