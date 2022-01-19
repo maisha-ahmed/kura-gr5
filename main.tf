@@ -148,7 +148,7 @@ resource "aws_route_table" "private-route-table" {
 # Private Subnet = Private-1a
 resource "aws_route_table_association" "private-rt" {
   subnet_id = aws_subnet.application-subnet-1a.id
-  route_table_id = aws_route_table.private-route-table.id
+  route_table_id = aws_route_table.private-subnet-1a.id
 
 }
 

@@ -4,6 +4,10 @@ orbs:
   aws-ecr: circleci/aws-ecr@0.0.4
   slack: circleci/slack@4.6.0
 
+#circleci run and push image to ecr then 
+#deploy infra run to build the infra and ecs
+#connect ecs to ecr to create the task or run infra first but how does ecs wait for image to be put in ecr
+
 workflows:
   deploy_infra:
     jobs:
