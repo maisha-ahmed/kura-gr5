@@ -28,6 +28,36 @@ resource "aws_vpc" "main" {
     }
 }
 
+# Create Internet Gateway
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = "IGW"
+  }
+}
+
+#Elastic IP for NAT Gateway resource
+resource "aws_eip" "EIP" {
+  vpc = true
+  tags = {
+    Name = "aws_eip" 
+    }
+  }
+
+resource "aws_nat_gateway" "NAT" {
+  allocation_id = aws_eip.EIP.id
+  subnet_id     = aws_subnet.pub-subnet-1a.id
+  tags = {
+    Name = "ngw"
+  }
+
+  # To ensure proper ordering, it is recommended 
+  # to add an explicit dependency
+  # on the Internet Gateway for the VPC.
+  depends_on = [aws_internet_gateway.igw]
+}
+
 
 # 4 public subnets
 resource "aws_subnet" "pub-subnet-1a" {
@@ -74,51 +104,4 @@ resource "aws_subnet" "private-subnet-1b" {
   }
 }
 
-
-
-
-# Create Web layber route table
-# web and app are used interchangeably
-resource "aws_route_table" "web-rt" {
-  vpc_id = aws_vpc.main.id
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.igw.id
-  }
-
-  tags = {
-    Name = "WebRT"
-  }
-}
-
-# Create Web Subnet association with Web route table
-resource "aws_route_table_association" "a" {
-  subnet_id      = aws_subnet.pub-subnet-1a.id
-  route_table_id = aws_route_table.web-rt.id
-}
-
-resource "aws_route_table_association" "b" {
-  subnet_id      = aws_subnet.pub-subnet-1b.id
-  route_table_id = aws_route_table.web-rt.id
-}
-
-# Private route table
-resource "aws_route_table" "private-route-table" {
-  vpc_id = aws_vpc.main.id
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_nat_gateway.NAT.id
-    }
-    tags = {
-      "Name" = "prvt-rt-tbl"
-    }
-}
-
-# Associate Private Route Table to 
-# Private Subnet = Private-1a
-resource "aws_route_table_association" "private-rt" {
-  subnet_id = aws_subnet.application-subnet-1a.id
-  route_table_id = aws_route_table.private-route-table.id
-
-}
 
