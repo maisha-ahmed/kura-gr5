@@ -88,6 +88,7 @@ resource "aws_subnet" "private-subnet-1a" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.21.0/24"
   availability_zone = "us-east-1a"
+  map_public_ip_on_launch = false
 
   tags = {
     Name = "Database-1a"
@@ -98,6 +99,7 @@ resource "aws_subnet" "private-subnet-1b" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.22.0/24"
   availability_zone = "us-east-1b"
+  map_public_ip_on_launch = false
 
   tags = {
     Name = "Database-1b"
@@ -147,8 +149,8 @@ resource "aws_route_table" "private-route-table" {
 # Associate Private Route Table to 
 # Private Subnet = Private-1a
 resource "aws_route_table_association" "private-rt" {
-  subnet_id = aws_subnet.application-subnet-1a.id
-  route_table_id = aws_route_table.private-subnet-1a.id
+  subnet_id = aws_subnet.private-subnet-1a.id
+  route_table_id = aws_route_table.private-route-table.id
 
 }
 
