@@ -1,9 +1,34 @@
 version: 2.1
 orbs:
+  terraform: circleci/terraform@3.0.0
   aws-ecr: circleci/aws-ecr@0.0.4
   slack: circleci/slack@4.6.0
 
+#circleci run and push image to ecr then 
+#deploy infra run to build the infra and ecs
+#connect ecs to ecr to create the task or run infra first but how does ecs wait for image to be put in ecr
+#slack orb is used to integrate circleci with slack, so we can be notified of deployment fails/passes
+
 workflows:
+  deploy_infra:
+    jobs:
+    - terraform/validate:
+        checkout: true
+        context: terraform
+    - terraform/plan:
+        checkout: true
+        context: terraform
+        persist-workspace: true
+        requires:
+        - terraform/validate
+    - terraform/apply:
+        attach-workspace: true
+        context: terraform
+        filters:
+          branches:
+            only: main
+        requires:
+        - terraform/plan
   build_test_deploy:
     jobs:
       - build_test:
@@ -18,10 +43,8 @@ workflows:
           tag: image-${CIRCLE_BUILD_NUM}
           requires:
             - build_test
-  
-          
-                
-      
+
+
 jobs:
   build_test:
     docker:
@@ -45,25 +68,7 @@ jobs:
       - slack/notify:
           event: pass
           template: success_tagged_deploy_1
-          
-#       - slack/notify:
-#           channel: SLACK_DEFAULT_CHANNEL
-#           custom: |
-#             {
-#               "blocks": [
-#                 {
-#                   "type": "section",
-#                   "fields": [
-#                     {
-#                       "type": "plain_text",
-#                       "text": "*Test passed notification*",
-#                       "emoji": true
-#                     }
-#                   ]
-#                 }
-#               ]
-#           event: pass  
-                 
+                           
       - store_test_results:
           path: test-reports
       - store_artifacts:
@@ -86,9 +91,7 @@ jobs:
             docker push ${DOCKERHUB_USERNAME}/${IMAGE_NAME}
 
 
-
-
-
+  
 
 
           
