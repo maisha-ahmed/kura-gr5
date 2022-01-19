@@ -7,6 +7,7 @@ orbs:
 #circleci run and push image to ecr then 
 #deploy infra run to build the infra and ecs
 #connect ecs to ecr to create the task or run infra first but how does ecs wait for image to be put in ecr
+#slack orb is used to integrate circleci with slack, so we can be notified of deployment fails/passes
 
 workflows:
   deploy_infra:
@@ -67,25 +68,7 @@ jobs:
       - slack/notify:
           event: pass
           template: success_tagged_deploy_1
-          
-#       - slack/notify:
-#           channel: SLACK_DEFAULT_CHANNEL
-#           custom: |
-#             {
-#               "blocks": [
-#                 {
-#                   "type": "section",
-#                   "fields": [
-#                     {
-#                       "type": "plain_text",
-#                       "text": "*Test passed notification*",
-#                       "emoji": true
-#                     }
-#                   ]
-#                 }
-#               ]
-#           event: pass  
-                 
+                           
       - store_test_results:
           path: test-reports
       - store_artifacts:
@@ -106,6 +89,7 @@ jobs:
             docker build -t ${DOCKERHUB_USERNAME}/${IMAGE_NAME} -t ${DOCKERHUB_USERNAME}/${IMAGE_NAME}:${TAG} .
             echo ${DOCKERHUB_PASSWORD} | docker login -u ${DOCKERHUB_USERNAME} --password-stdin
             docker push ${DOCKERHUB_USERNAME}/${IMAGE_NAME}
+
 
   
 
