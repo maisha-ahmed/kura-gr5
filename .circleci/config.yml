@@ -32,7 +32,7 @@ workflows:
   build_test_deploy:
     jobs:
       - build_test:
-           context: ei-circleci-alerts
+          context: ei-circleci-alerts
       - docker_hub_build_push_image:
           requires:
             - build_test
@@ -43,6 +43,7 @@ workflows:
           tag: image-${CIRCLE_BUILD_NUM}
           requires:
             - build_test
+      
 
 
 jobs:
@@ -66,8 +67,9 @@ jobs:
           event: fail
           template: basic_fail_1
       - slack/notify:
+          channel: $SLACK_DEFAULT_CHANNEL
           event: pass
-          template: success_tagged_deploy_1
+          template: basic_success_1
                            
       - store_test_results:
           path: test-reports
@@ -89,6 +91,14 @@ jobs:
             docker build -t ${DOCKERHUB_USERNAME}/${IMAGE_NAME} -t ${DOCKERHUB_USERNAME}/${IMAGE_NAME}:${TAG} .
             echo ${DOCKERHUB_PASSWORD} | docker login -u ${DOCKERHUB_USERNAME} --password-stdin
             docker push ${DOCKERHUB_USERNAME}/${IMAGE_NAME}
+      - slack/notify:
+          channel: $SLACK_DEFAULT_CHANNEL
+          event: fail
+          template: basic_fail_1
+      - slack/notify:
+          channel: $SLACK_DEFAULT_CHANNEL
+          event: pass
+          template: success_tagged_deploy_1
 
 
   
