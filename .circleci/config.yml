@@ -37,6 +37,7 @@ workflows:
           requires:
             - build_test
       - aws-ecr/build_and_push_image:
+          context: ei-circleci-alerts
           region: ${AWS_DEFAULT_REGION}
           account-url: ${AWS_ECR_ACCOUNT_URL}
           repo: circleci
