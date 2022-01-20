@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  terraform: circleci/terraform@3.0.0
+#   terraform: circleci/terraform@3.0.0
   aws-ecr: circleci/aws-ecr@0.0.4
   slack: circleci/slack@4.6.0
 
@@ -10,39 +10,42 @@ orbs:
 #slack orb is used to integrate circleci with slack, so we can be notified of deployment fails/passes
 
 workflows:
-  deploy_infra:
-    jobs:
-    - terraform/validate:
-        checkout: true
-        context: terraform
-    - terraform/plan:
-        checkout: true
-        context: terraform
-        persist-workspace: true
-        requires:
-        - terraform/validate
-    - terraform/apply:
-        attach-workspace: true
-        context: terraform
-        filters:
-          branches:
-            only: main
-        requires:
-        - terraform/plan
+#   deploy_infra:
+#     jobs:
+#     - terraform/validate:
+#         checkout: true
+#         context: terraform
+#     - terraform/plan:
+#         checkout: true
+#         context: terraform
+#         persist-workspace: true
+#         requires:
+#         - terraform/validate
+#     - terraform/apply:
+#         attach-workspace: true
+#         context: terraform
+#         filters:
+#           branches:
+#             only: main
+#         requires:
+#         - terraform/plan
   build_test_deploy:
     jobs:
       - build_test:
-           context: ei-circleci-alerts
+          context: ei-circleci-alerts 
       - docker_hub_build_push_image:
+          context: ei-circleci-alerts
           requires:
             - build_test
       - aws-ecr/build_and_push_image:
+          
           region: ${AWS_DEFAULT_REGION}
           account-url: ${AWS_ECR_ACCOUNT_URL}
           repo: circleci
           tag: image-${CIRCLE_BUILD_NUM}
           requires:
             - build_test
+      
 
 
 jobs:
@@ -66,8 +69,9 @@ jobs:
           event: fail
           template: basic_fail_1
       - slack/notify:
+          channel: $SLACK_DEFAULT_CHANNEL
           event: pass
-          template: success_tagged_deploy_1
+          template: basic_success_1
                            
       - store_test_results:
           path: test-reports
@@ -89,6 +93,14 @@ jobs:
             docker build -t ${DOCKERHUB_USERNAME}/${IMAGE_NAME} -t ${DOCKERHUB_USERNAME}/${IMAGE_NAME}:${TAG} .
             echo ${DOCKERHUB_PASSWORD} | docker login -u ${DOCKERHUB_USERNAME} --password-stdin
             docker push ${DOCKERHUB_USERNAME}/${IMAGE_NAME}
+#       - slack/notify:
+#           channel: $SLACK_DEFAULT_CHANNEL
+#           event: fail
+#           template: basic_fail_1
+#       - slack/notify:
+#           channel: $SLACK_DEFAULT_CHANNEL
+#           event: pass
+#           template: success_tagged_deploy_1
 
 
   
