@@ -48,7 +48,18 @@ sudo mysql -h {endpoint of your database} -P 3306 -u {database_username} -p
 This will prompt you to enter the database password.<br>
 After you input the password, your web app is now connected to your database.
 
-### Part 3 - Setting up the login page
+### Part 3 - Infrastructure as Code (IaC):
+
+Provisionning the infrastructure
+
+  1. Install [terraform](https://linoxide.com/install-terraform-on-ubuntu-20-04/).
+
+
+### Part 4 - Circle CI Set up
+
+Used resource from [punkdata](https://github.com/punkdata/python-flask/blob/master/.circleci/config.yml).
+
+### Part 5 - Setting up the login page
 
 Instead of building a frontend for the login page, we decided to use [AWS Cognito](https://cran.r-project.org/web/packages/cognitoR/readme/README.html).<br>
 Follow the link for the setup.
@@ -59,12 +70,8 @@ Follow the link for the setup.
 
 For mor information visit the [Amazon Cognito - Developer Guide](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-dg.pdf).
 
-### Part 3 - Circle CI Set up
 
-Used resource from [punkdata](https://github.com/punkdata/python-flask/blob/master/.circleci/config.yml).
-
-
-### Part 4 - The Front-End Modifications
+### Part 6 - The Front-End Modifications
 
 After adding **AWS Cognito** for authentication, we did not have a way to log out of the application once we have loged in. <br>
 For this, we added a **logout** button. We used an icon from [zmdi](https://www.templateshub.net/demo/Mentor-Bootstrap4-Admin-Dashboard-Template/icons-material.html). <br>
