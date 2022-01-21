@@ -37,19 +37,40 @@ resource "aws_internet_gateway" "igw" {
   }
 }
 
-#Elastic IP for NAT Gateway resource
-resource "aws_eip" "EIP" {
+#Elastic IP and NAT Gateway resource for az1 
+resource "aws_eip" "EIP1a" {
   vpc = true
   tags = {
-    Name = "aws_eip" 
+    Name = "aws_eip1a" 
     }
   }
 
-resource "aws_nat_gateway" "NAT" {
-  allocation_id = aws_eip.EIP.id
+resource "aws_nat_gateway" "NAT1a" {
+  allocation_id = aws_eip.EIP1a.id
   subnet_id     = aws_subnet.pub-subnet-1a.id
   tags = {
-    Name = "ngw"
+    Name = "ngw1a"
+  }
+
+  # To ensure proper ordering, it is recommended 
+  # to add an explicit dependency
+  # on the Internet Gateway for the VPC.
+  depends_on = [aws_internet_gateway.igw]
+}
+
+#Elastic IP and NAT Gateway resource for az2
+resource "aws_eip" "EIP1b" {
+  vpc = true
+  tags = {
+    Name = "aws_eip1b" 
+    }
+  }
+
+resource "aws_nat_gateway" "NAT1a" {
+  allocation_id = aws_eip.EIP1b.id
+  subnet_id     = aws_subnet.pub-subnet-1b.id
+  tags = {
+    Name = "ngw1b"
   }
 
   # To ensure proper ordering, it is recommended 
@@ -148,8 +169,15 @@ resource "aws_route_table" "private-route-table" {
 
 # Associate Private Route Table to 
 # Private Subnet = Private-1a
-resource "aws_route_table_association" "private-rt" {
+resource "aws_route_table_association" "private-rta" {
   subnet_id = aws_subnet.private-subnet-1a.id
+  route_table_id = aws_route_table.private-route-table.id
+
+}
+
+# Private Subnet = Private-1b
+resource "aws_route_table_association" "private-rtb" {
+  subnet_id = aws_subnet.private-subnet-1b.id
   route_table_id = aws_route_table.private-route-table.id
 
 }
