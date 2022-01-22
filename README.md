@@ -18,7 +18,7 @@ In this python project, we will build a grocery store management application. It
 ## Software Tools:
 
    * **AWS account**: set up an [account](https://docs.aws.amazon.com/polly/latest/dg/setting-up.html) and a user.
-   * **AWS:** Cognito, RDS, EC2, CloudWatch
+   * **AWS:** ECS, ECR, RDS, EC2, CloudWatch
    * **CI/CD Pipeline:** Circle CI
    * **Infrastructure as Code (IaC):** Terraform
    * **Testing:** Pytest
