@@ -67,10 +67,9 @@ workflows:
           tag: latest
           requires:
             - python_test
-          build_test_deploy:
           
       - deploy_infra:
           context: terraform
           requires:
-            - build_test_deploy
+            - aws-ecr/build-and-push-image
             
