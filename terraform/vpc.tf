@@ -1,9 +1,9 @@
-# Create a new VPC
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc
+#Main VPC 
 resource "aws_vpc" "main" {
-  cidr_block = "10.0.0.0/16"
+  cidr_block = "192.168.0.0/16"
 
   tags = {
-    Name = "Main VPC"
-    }
+    Name = "ei-vpc"
+  }
 }
+
