@@ -2,7 +2,6 @@ version: 2.1
 orbs:
 #   terraform: circleci/terraform@3.0.0
   aws-ecr: circleci/aws-ecr@7.3.0
-
   slack: circleci/slack@4.6.0
 
 #circleci run and push image to ecr then 
@@ -64,10 +63,9 @@ workflows:
     jobs:
       - python_test:
           context: ei-circleci-alerts 
-
-      - aws-ecr/build_and_push_image:
-          region: ${AWS_DEFAULT_REGION}
-          account-url: ${AWS_ECR_ACCOUNT_URL}
+      - aws-ecr/build-and-push-image:
+          region: AWS_DEFAULT_REGION
+          account-url: AWS_ECR_ACCOUNT_URL
           create-repo: true
           repo: circle-ci
           tag: latest
