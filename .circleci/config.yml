@@ -49,8 +49,6 @@ jobs:
           path: ./terraform
       - terraform/plan:
           path: ./terraform
-          requires:
-          - terraform/validate
 
 
 
