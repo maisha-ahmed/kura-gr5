@@ -1,4 +1,4 @@
- <h1 align=center>Final Project: Grocery Web Application</h1>
+ <h1 align=center>Final Project: Inventory Management Application</h1>
 
 The source codes and other resources for for the application deployed can be found in this **[link here](https://github.com/codebasics/python_projects_grocery_webapp)** on [codebasics](https://github.com/codebasics).
 
