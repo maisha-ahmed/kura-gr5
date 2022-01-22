@@ -74,17 +74,5 @@ workflows:
 #         - terraform/plan
   build_test_deploy:
     jobs:
-      - python_test:
-          context: ei-circleci-alerts 
-
-      - aws-ecr/build_and_push_image:
-          region: ${AWS_DEFAULT_REGION}
-          account-url: ${AWS_ECR_ACCOUNT_URL}
-          create-repo: true
-          repo: circle-ci
-          tag: latest
-          requires:
-            - python_test
-      
       - deploy_infra:
           context: terraform
