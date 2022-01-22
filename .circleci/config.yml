@@ -41,7 +41,7 @@ workflows:
           
           region: ${AWS_DEFAULT_REGION}
           account-url: ${AWS_ECR_ACCOUNT_URL}
-          repo: ${CIRCLE_PROJECT_REPONAME}
+          repo: circle-ci
           tag: image-${CIRCLE_BUILD_NUM}-latest
           requires:
             - build_test
