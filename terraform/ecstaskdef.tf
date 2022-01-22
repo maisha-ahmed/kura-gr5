@@ -7,7 +7,7 @@ resource "aws_ecs_task_definition" "ei_task_definition" {
   network_mode             = "awsvpc"
   cpu                      = 1024 #1gb 
   memory                   = 2048 #2gb
-  depends_on               = [aws_ecs_cluster.ei_cluster, aws_ecr_repository.ei_ecr]
+  depends_on               = [aws_ecs_cluster.ei_cluster]
 
   # This will use images pushed to ECR
   #Image is the URI
