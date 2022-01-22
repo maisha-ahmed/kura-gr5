@@ -16,7 +16,7 @@ resource "aws_ecs_task_definition" "ei_task_definition" {
 [
   {
     "name": "${var.application_name}-application",
-    "image": "${data.aws_ecr_repository.circleci_ecr.repository_url}",
+    "image": "829789961825.dkr.ecr.us-east-1.amazonaws.com/circle-ci:latest",
     "cpu": 1024,
     "memory": 2048,
     "essential": true,
