@@ -9,47 +9,8 @@ orbs:
 #connect ecs to ecr to create the task or run infra first but how does ecs wait for image to be put in ecr
 #slack orb is used to integrate circleci with slack, so we can be notified of deployment fails/passes
 
-workflows:
-#   deploy_infra:
-#     jobs:
-#     - terraform/validate:
-#         checkout: true
-#         context: terraform
-#     - terraform/plan:
-#         checkout: true
-#         context: terraform
-#         persist-workspace: true
-#         requires:
-#         - terraform/validate
-#     - terraform/apply:
-#         attach-workspace: true
-#         context: terraform
-#         filters:
-#           branches:
-#             only: main
-#         requires:
-#         - terraform/plan
-  build_test_deploy:
-    jobs:
-      - build_test:
-          context: ei-circleci-alerts 
-      - docker_hub_build_push_image:
-          context: ei-circleci-alerts
-          requires:
-            - build_test
-      - aws-ecr/build_and_push_image:
-          
-          region: ${AWS_DEFAULT_REGION}
-          account-url: ${AWS_ECR_ACCOUNT_URL}
-          repo: circleci
-          tag: image-${CIRCLE_BUILD_NUM}
-          requires:
-            - build_test
-      
-
-
 jobs:
-  build_test:
+  python_test:
     docker:
       - image: circleci/python:3.7.4
     steps:
@@ -77,40 +38,37 @@ jobs:
           path: test-reports
       - store_artifacts:
           path: test-reports
-  docker_hub_build_push_image:
-    docker:
-      - image: circleci/python:3.7.4
-    steps:
-      - checkout
-      - setup_remote_docker:
-          docker_layer_caching: false
-      - run:
-          name: Build and push Docker image to Docker Hub
-          command: |
-            echo 'export TAG=image-${CIRCLE_BUILD_NUM}' >> ${BASH_ENV}
-            echo 'export IMAGE_NAME=${CIRCLE_PROJECT_REPONAME}' >> ${BASH_ENV}
-            source ${BASH_ENV}
-            docker build -t ${DOCKERHUB_USERNAME}/${IMAGE_NAME} -t ${DOCKERHUB_USERNAME}/${IMAGE_NAME}:${TAG} .
-            echo ${DOCKERHUB_PASSWORD} | docker login -u ${DOCKERHUB_USERNAME} --password-stdin
-            docker push ${DOCKERHUB_USERNAME}/${IMAGE_NAME}
-#       - slack/notify:
-#           channel: $SLACK_DEFAULT_CHANNEL
-#           event: fail
-#           template: basic_fail_1
-#       - slack/notify:
-#           channel: $SLACK_DEFAULT_CHANNEL
-#           event: pass
-#           template: success_tagged_deploy_1
 
+workflows:
+#   deploy_infra:
+#     jobs:
+#     - terraform/validate:
+#         checkout: true
+#         context: terraform
+#     - terraform/plan:
+#         checkout: true
+#         context: terraform
+#         persist-workspace: true
+#         requires:
+#         - terraform/validate
+#     - terraform/apply:
+#         attach-workspace: true
+#         context: terraform
+#         filters:
+#           branches:
+#             only: main
+#         requires:
+#         - terraform/plan
+  build_test_deploy:
+    jobs:
+      - python_test:
+          context: ei-circleci-alerts 
 
-  
-
-
-          
-
-
-#This is a comment to trigger the pipeline 
-
-          
-
-
+      - aws-ecr/build_and_push_image:
+          region: ${AWS_DEFAULT_REGION}
+          account-url: ${AWS_ECR_ACCOUNT_URL}
+          create-repo: true
+          repo: circle-ci
+          tag: image-${CIRCLE_BUILD_NUM}
+          requires:
+            - python_test
