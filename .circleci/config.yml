@@ -46,7 +46,6 @@ jobs:
     steps:
       - checkout
       - terraform/validate:
-         context: terraform
          path: ./terraform
     
 
