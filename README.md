@@ -21,7 +21,7 @@ In this python project, we will build a grocery store management application. It
    * **AWS:** Cognito, RDS, EC2, CloudWatch
    * **CI/CD Pipeline:** Circle CI
    * **Infrastructure as Code (IaC):** Terraform
-   * **Testing:** Cypress
+   * **Testing:** Pytest
 
 
 
