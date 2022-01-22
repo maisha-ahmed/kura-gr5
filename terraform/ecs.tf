@@ -6,5 +6,5 @@ resource "aws_ecs_cluster" "ei_cluster" {
     name  = "containerInsights"
     value = "enabled"
   }
-  depends_on = [aws_ecr_repository.ei_ecr]
+
 }
