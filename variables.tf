@@ -1,1 +1,0 @@
-variable "ecs_domain_name" {}

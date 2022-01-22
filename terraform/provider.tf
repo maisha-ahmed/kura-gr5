@@ -17,3 +17,12 @@ provider "aws" {
     }
   }
 }
+
+terraform {
+  backend "s3" {
+    bucket = "terraform-state-bucket-grp5"
+    key    = "dev/iventorize-state"
+    region = "us-east-1"
+    encrypt = true
+  }
+}
