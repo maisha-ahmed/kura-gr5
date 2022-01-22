@@ -47,11 +47,7 @@ jobs:
       - checkout
       - terraform/validate:
           path: ./terraform
-      - terraform/plan:
-          path: ./terraform
-      - terraform/apply:
-          path: ./terraform
-
+     
 workflows:
 
   build_test_deploy:
