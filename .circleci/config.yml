@@ -64,7 +64,7 @@ workflows:
       - python_test:
           context: ei-circleci-alerts 
 
-      - aws-ecr/build_and_push_image:
+      - aws-ecr/build-and-push-image:
           region: AWS_DEFAULT_REGION
           account-url: AWS_ECR_ACCOUNT_URL
           #create-repo: true
