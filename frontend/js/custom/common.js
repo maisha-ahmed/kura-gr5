@@ -1,10 +1,10 @@
 // Define your api here
-var productListApiUrl = 'http://54.174.247.9:5000/getProducts';
-var uomListApiUrl = 'http://54.174.247.9:5000/getUOM';
-var productSaveApiUrl = 'http://54.174.247.9:5000/insertProduct';
-var productDeleteApiUrl = 'http://54.174.247.9:5000/deleteProduct';
-var orderListApiUrl = 'http://54.174.247.9:5000/getAllOrders';
-var orderSaveApiUrl = 'http://54.174.247.9:5000/insertOrder';
+var productListApiUrl = 'http://public_ip:5000/getProducts';
+var uomListApiUrl = 'http://public_ip:5000/getUOM';
+var productSaveApiUrl = 'http://public_ip:5000/insertProduct';
+var productDeleteApiUrl = 'http://public_ip:5000/deleteProduct';
+var orderListApiUrl = 'http://public_ip:5000/getAllOrders';
+var orderSaveApiUrl = 'http://public_ip:5000/insertOrder';
 
 // For product drop in order
 var productsApiUrl = 'https://fakestoreapi.com/products';
