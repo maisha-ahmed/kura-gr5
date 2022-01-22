@@ -21,7 +21,7 @@ In this python project, we will build a grocery store management application. It
    * **AWS:** Cognito, RDS, EC2, CloudWatch
    * **CI/CD Pipeline:** Circle CI
    * **Infrastructure as Code (IaC):** Terraform
-   * **Testing:** Cypress
+   * **Testing:** Pytest
 
 
 
@@ -93,4 +93,4 @@ See picture below.
 3. https://techexpert.tips/nginx/enable-https-nginx/
 4. https://www.templateshub.net/demo/Mentor-Bootstrap4-Admin-Dashboard-Template/icons-material.html
 
-
+#This is a comment
