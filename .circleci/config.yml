@@ -49,7 +49,6 @@ jobs:
          path: ./terraform
       - terraform/plan:
           path: ./terraform
-          persist-workspace: true
           requires:
           - terraform/validate
     
