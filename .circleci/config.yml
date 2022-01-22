@@ -44,8 +44,8 @@ jobs:
     docker:
       - image: docker.mirror.hashicorp.services/hashicorp/terraform:light
     steps:
+      - checkout
       - terraform/validate:
-         checkout: true
          context: terraform
          path: ./terraform
     
