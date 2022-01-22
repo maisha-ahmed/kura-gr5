@@ -62,7 +62,7 @@ workflows:
       - aws-ecr/build-and-push-image:
           region: AWS_DEFAULT_REGION
           account-url: AWS_ECR_ACCOUNT_URL
-          #create-repo: true
+          create-repo: true
           repo: circle-ci
           tag: latest
           requires:
