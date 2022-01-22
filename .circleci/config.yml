@@ -51,9 +51,6 @@ jobs:
           path: ./terraform
       - terraform/apply:
           path: ./terraform
-          filters:
-            branches:
-              only: main
 
 
 
