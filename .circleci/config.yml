@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
   terraform: circleci/terraform@3.0.0
-  aws-ecr: circleci/aws-ecr@0.0.4
+  aws-ecr: circleci/aws-ecr@7.3.0
   slack: circleci/slack@4.6.0
 
 #circleci run and push image to ecr then 
@@ -46,22 +46,9 @@ jobs:
     steps:
       -  path: ./terraform
       - terraform/validate:
-#         checkout: true
-#         context: terraform
-#     - terraform/plan:
-          checkout: true
-#         context: terraform
-          persist-workspace: true
-#         requires:
-#         - terraform/validate
-#     - terraform/apply:
-#         attach-workspace: true
-#         context: terraform
-#         filters:
-#           branches:
-#             only: main
-#         requires:
-#         - terraform/plan
+         checkout: true
+         context: terraform
+    
 
 
 
@@ -95,6 +82,6 @@ workflows:
           account-url: ${AWS_ECR_ACCOUNT_URL}
           create-repo: true
           repo: circle-ci
-          tag: image-${CIRCLE_BUILD_NUM}
+          tag: latest
           requires:
             - python_test
