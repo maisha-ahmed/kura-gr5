@@ -1,5 +1,5 @@
 resource "aws_iam_role" "ei_task_execution_role" {
-  name = "quiznose_task_execution"
+  name = "ei_task_execution"
 
   assume_role_policy = <<EOF
 {
