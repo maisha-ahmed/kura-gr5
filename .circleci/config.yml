@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-#   terraform: circleci/terraform@3.0.0
+  terraform: circleci/terraform@3.0.0
   aws-ecr: circleci/aws-ecr@7.3.0
   slack: circleci/slack@4.6.0
 
@@ -25,40 +25,35 @@ jobs:
           name: Run unit tests
           command: |
             pytest --junitxml=test-reports/junit.xml --html=test-reports/pytest_report.html --self-contained-html
-      # - slack/notify:
-      #     channel: $SLACK_DEFAULT_CHANNEL
-      #     event: fail
-      #     template: basic_fail_1
-      # - slack/notify:
-      #     channel: $SLACK_DEFAULT_CHANNEL
-      #     event: pass
-      #     template: basic_success_1
+      - slack/notify:
+          channel: $SLACK_DEFAULT_CHANNEL
+          event: fail
+          template: basic_fail_1
+      - slack/notify:
+          channel: $SLACK_DEFAULT_CHANNEL
+          event: pass
+          template: basic_success_1
                            
       - store_test_results:
           path: test-reports
       - store_artifacts:
           path: test-reports
+          
+  deploy_infra:
+    working_directory: /tmp/project
+    docker:
+      - image: docker.mirror.hashicorp.services/hashicorp/terraform:light
+    steps:
+      - checkout
+      - terraform/validate:
+          path: ./terraform
+      - terraform/plan:
+          path: ./terraform
+      - terraform/apply:
+          path: ./terraform
 
 workflows:
-#   deploy_infra:
-#     jobs:
-#     - terraform/validate:
-#         checkout: true
-#         context: terraform
-#     - terraform/plan:
-#         checkout: true
-#         context: terraform
-#         persist-workspace: true
-#         requires:
-#         - terraform/validate
-#     - terraform/apply:
-#         attach-workspace: true
-#         context: terraform
-#         filters:
-#           branches:
-#             only: main
-#         requires:
-#         - terraform/plan
+
   build_test_deploy:
     jobs:
       - python_test:
@@ -67,8 +62,13 @@ workflows:
       - aws-ecr/build-and-push-image:
           region: AWS_DEFAULT_REGION
           account-url: AWS_ECR_ACCOUNT_URL
-          create-repo: true
+          #create-repo: true
           repo: circle-ci
           tag: latest
           requires:
             - python_test
+          
+      - deploy_infra:
+          context: terraform
+          requires:
+            - aws-ecr/build-and-push-image
