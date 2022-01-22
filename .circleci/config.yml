@@ -1,6 +1,8 @@
+# Note: make sure you uncomment this file before deploying
+
 version: 2.1
 orbs:
-  terraform: circleci/terraform@3.0.0
+  #terraform: circleci/terraform@3.0.0
   aws-ecr: circleci/aws-ecr@7.3.0
   slack: circleci/slack@4.6.0
 
@@ -39,14 +41,18 @@ jobs:
       - store_artifacts:
           path: test-reports
           
-  deploy_infra:
-    working_directory: /tmp/project
-    docker:
-      - image: docker.mirror.hashicorp.services/hashicorp/terraform:light
-    steps:
-      - checkout
-      - terraform/validate:
-          path: ./terraform
+#  deploy_infra:
+#    working_directory: /tmp/project
+#    docker:
+#      - image: docker.mirror.hashicorp.services/hashicorp/terraform:light
+#    steps:
+#      - checkout
+#      - terraform/validate:
+#          path: ./terraform
+#      - terraform/plan:
+#          path: ./terraform
+#      - terraform/apply:
+#          path: ./terraform
      
 workflows:
 
@@ -55,17 +61,17 @@ workflows:
       - python_test:
           context: ei-circleci-alerts 
 
-      - aws-ecr/build-and-push-image:
-          region: AWS_DEFAULT_REGION
-          account-url: AWS_ECR_ACCOUNT_URL
-          create-repo: true
-          repo: circle-ci
-          tag: latest
-          requires:
-            - python_test
+ #     - aws-ecr/build-and-push-image:
+ #         region: AWS_DEFAULT_REGION
+ #         account-url: AWS_ECR_ACCOUNT_URL
+ #         create-repo: true
+ #         repo: circle-ci
+ #         tag: latest
+ #         requires:
+ #           - python_test
           
-      - deploy_infra:
-          context: terraform
-          requires:
-            - aws-ecr/build-and-push-image
-            
+ #    - deploy_infra:
+ #         context: terraform
+ #         requires:
+ #           - aws-ecr/build-and-push-image
+                       
