@@ -1,3 +1,19 @@
+ <div id="top"></div>
+<!--
+*** Source for the icon used:
+*** https://github.com/othneildrew/Best-README-Template
+-->
+
+[![Contributors][contributors-shield]][contributors-url]
+[![Issues][issues-shield]][issues-url]
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/maisha-ahmed/kura-gr5.svg?style=for-the-badge
+[contributors-url]: https://github.com/maisha-ahmed/kura-gr5/graphs/contributors
+[issues-shield]: https://img.shields.io/github/issues/maisha-ahmed/kura-gr5.svg?style=for-the-badge
+[issues-url]: https://github.com/maisha-ahmed/kura-gr5/issues
+
  <h1 align=center>Final Project: Inventory Management Application</h1>
 
 The source codes and other resources for for the application deployed can be found in this **[link here](https://github.com/codebasics/python_projects_grocery_webapp)** on [codebasics](https://github.com/codebasics).
@@ -13,6 +29,13 @@ In this python project, we will build an inventory store management application.
 4. Here is how the app lauched:
 
 ![](frontend/images/app_page.PNG)
+
+## Good to know:
+
+1. Containerization, scripting
+2. Basic knowledge of CI/CD pipeline
+3. Automating infrastructure provisioning
+4. Know how to ssh into an EC2 and install Nginx
 
 ## Architecture:
 
@@ -31,6 +54,7 @@ All frontends talk to the same database; the second one is a stand by database i
    * **CI/CD Pipeline:** Circle CI is used for continuous integration
    * **Infrastructure as Code (IaC):** Terraform is used for provisioning the architecture
    * **Testing:** Pytest is used to test the application. 
+   * **Docker:** for containerization. See the [Dockerfile](https://github.com/ibrahima1289/kura-g5/blob/main/Dockerfile) for more details. 
 
 ## Procedure:
 
@@ -154,6 +178,4 @@ For [CloudWatch](https://github.com/ibrahima1289/kura-g5/blob/main/terraform/clo
 3. Configure [https](https://techexpert.tips/nginx/enable-https-nginx/) for NGINX.
 4. [MENTOR](https://www.templateshub.net/demo/Mentor-Bootstrap4-Admin-Dashboard-Template/icons-material.html), adding icons in HTML.
 5. Run Python [unit test](https://www.techiediaries.com/python-unit-tests-github-actions/).
-
-## The team
 
