@@ -88,9 +88,8 @@ See picture below.
 
 ## Sources visited:
 
-1. https://docs.nginx.com/nginx/deployment-guides/single-sign-on/cognito/#cognito-domain-name
-2. https://cran.r-project.org/web/packages/cognitoR/readme/README.html
-3. https://techexpert.tips/nginx/enable-https-nginx/
-4. https://www.templateshub.net/demo/Mentor-Bootstrap4-Admin-Dashboard-Template/icons-material.html
-
-#This is a comment
+1. Amazon Cognito, [NGINX Plus](https://docs.nginx.com/nginx/deployment-guides/single-sign-on/cognito/#cognito-domain-name).
+2. Implementing [AWS Cognito](https://cran.r-project.org/web/packages/cognitoR/readme/README.html).
+3. Configure [https](https://techexpert.tips/nginx/enable-https-nginx/) for NGINX.
+4. [MENTOR](https://www.templateshub.net/demo/Mentor-Bootstrap4-Admin-Dashboard-Template/icons-material.html), adding icons in HTML.
+5. Run Python [unit test](https://www.techiediaries.com/python-unit-tests-github-actions/).
